@@ -11,12 +11,14 @@ import java.util.Scanner;
 public class HTTP_Client {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        System.out.println("Enter server IP Address: ");
+        String ip = sc.nextLine();
         System.out.println("Enter Device ID: ");
         String ActuatorID = sc.nextLine();
         System.out.println("Enter Command (TURN_ON / TURN_OFF): ");
         String Command = sc.nextLine().toUpperCase();
         try {
-            URL url = new URL("http://localhost:8040/api/control");
+            URL url = new URL("http://" + ip + ":8040/api/control");
             HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
             ucon.setRequestMethod("POST"); // "POST": Send the data to the server
             ucon.setRequestProperty("Content-Type", "application/json"); // When the data is sent in a POST request,

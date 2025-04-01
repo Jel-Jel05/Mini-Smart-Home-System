@@ -15,7 +15,7 @@ public class Actuator_Client {
             System.out.println("Enter server IP Address: ");
             String ip = sc.nextLine();
 
-            Socket socket = new Socket("192.168.1.27", 8081); // Open client socket in port "1234"
+            Socket socket = new Socket(ip, 8081); // Open client socket in port "1234"
             InputStreamReader isr = new InputStreamReader(socket.getInputStream()); // bridge between byte streams and character streams.
             // It reads bytes from the socket's input stream and decodes them into characters.
             BufferedReader br = new BufferedReader(isr); //Reads chunks of inputs to reduce system calls for every read operation
@@ -41,18 +41,25 @@ public class Actuator_Client {
                 // if (command == null){
                 //     break;
                 // }
-
                 // if (command.equals("TURN_ON")){
                 //     States = "ON";
                 // } else if (command.equals("TURN_OFF")) {
                 //     States = "OFF";
                 // }
-
                 // bw.write(ID + ": " + States);
                 // bw.newLine();
                 // bw.flush();
                 //System.out.println("status is: " + States);
-                System.out.println("Server Response: " + br.readLine());
+                String newStates = br.readLine();
+                if (newStates.equals("TURN_ON")){
+                    States = "ON";
+                } else if (newStates.equals("TURN_OFF")) {
+                    States = "OFF";
+                }
+                else if(newStates.equals( "EXIT")){
+                    return;
+                }
+                System.out.println(ID + " is " + States);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
