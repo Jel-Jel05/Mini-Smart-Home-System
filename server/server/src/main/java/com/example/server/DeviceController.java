@@ -1,6 +1,4 @@
 package com.example.server;
-import java.io.IOException;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,18 +8,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class DeviceController {
     private DeviceRegistry registry = DeviceRegistry.getInstance();
+    
 
     @PostMapping("/control") //Accepts Http post requests to api/command and parses the json request to a control command obejct
     public String controlDevice(@RequestBody ControlCommand command) {
+        System.out.println("Received command for device: " + command.getDeviceId());
         if (!registry.containsDevice(command.getDeviceId())) {
             return "{\"message\": \"Device not found\"}";
         }
         
         try {
             ActuatorConnection connection = registry.getConnection(command.getDeviceId());
-            String response = connection.sendCommand(command.getCommand());
-            return "{\"message\": \"" + response + "\"}"; //return the response weather off or on
-        } catch (IOException e) {
+            connection.sendCommand(command.getCommand());
+            System.out.println("matl3t4");
+            connection.currentStatus = command.getCommand();
+            return "message recived"; //return the response wheather off or on
+        } catch(Exception e) {
             return "{\"message\": \"Error communicating with device\"}"; 
         }
     }

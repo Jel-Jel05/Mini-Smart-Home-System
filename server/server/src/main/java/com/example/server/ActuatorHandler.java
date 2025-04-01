@@ -13,6 +13,7 @@ public class ActuatorHandler extends Thread {
     }
     
     public void run() {
+        String deviceId=" ";
         try {
             ActuatorConnection connection = new ActuatorConnection(socket);
             PrintWriter out = connection.out;
@@ -21,7 +22,7 @@ public class ActuatorHandler extends Thread {
             // splits the message to different components and registers the device with the central registry
             if ((inputLine = connection.in.readLine()) != null) {
                 String[] parts = inputLine.split(":");
-                String deviceId = parts[0];
+                deviceId = parts[0];
                 String initialStatus = parts[1];
                 
                 registry.registerDevice(deviceId, connection);
@@ -31,7 +32,28 @@ public class ActuatorHandler extends Thread {
             
 
         } catch (Exception e) {
-            System.out.println("Connection handler error: " + e.getMessage());
+            System.out.println("Connection with " + deviceId +" handler error: " + e.getMessage());
+        }
+        while (true) { 
+            try {
+                ActuatorConnection connection = new ActuatorConnection(socket);
+                PrintWriter out = connection.out;
+                String inputLine;
+                
+                if ((inputLine = connection.in.readLine()) != null) {
+                    String[] parts = inputLine.split(":");
+                    deviceId = parts[0];
+                    String initialStatus = parts[1];
+                    
+                    registry.registerDevice(deviceId, connection);
+                    out.println("Data recived");
+                }
+                
+    
+            } catch (Exception e) {
+                System.out.println("Connection with " + deviceId +" is off ");
+                break;
+            }
         }
     }
 }
