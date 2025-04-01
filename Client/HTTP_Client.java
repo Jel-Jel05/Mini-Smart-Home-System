@@ -22,7 +22,7 @@ public class HTTP_Client {
         String Command = sc.nextLine();
 
         try {
-            URL url = new URL("HTTP://" + ip + ":8080/control");
+            URL url = new URL("HTTP://" + ip + ":8081/control");
             HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
             ucon.setRequestMethod("POST"); // "POST": Send the data to the server
             ucon.setRequestProperty("Content-Type", "application/json"); // When the data is sent in a POST request,

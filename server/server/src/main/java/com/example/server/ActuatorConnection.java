@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class ActuatorConnection {
     private Socket socket; //the Tcp socket connection
-    private PrintWriter out; //output stream
+    public PrintWriter out; //output stream
     public BufferedReader in; //input stream, public so it can be accessed in the actuator handler class
     private String currentStatus; //tracks the status of the device
     

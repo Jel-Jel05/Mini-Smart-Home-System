@@ -1,6 +1,7 @@
 package com.example.server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ public class ServerApplication {
 		        new Thread(() -> {
             try {
                 DeviceRegistry registry = DeviceRegistry.getInstance();
-                ServerSocket serverSocket = new ServerSocket(8081);
+                ServerSocket serverSocket = new ServerSocket(8081, 0, InetAddress.getByName("0.0.0.0"));
                 System.out.println("TCP Server started on port 8081");
                 
                 while (true) {

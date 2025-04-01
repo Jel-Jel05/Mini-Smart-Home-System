@@ -1,4 +1,5 @@
 package com.example.server;
+import java.io.PrintWriter;
 import java.net.Socket;
 //extends thread to run as independet exection thread
 //each device gets its own thread
@@ -14,15 +15,17 @@ public class ActuatorHandler extends Thread {
     public void run() {
         try {
             ActuatorConnection connection = new ActuatorConnection(socket);
+            PrintWriter out = connection.out;
             String inputLine;
             
             // splits the message to different components and registers the device with the central registry
-            if ((inputLine = connection.in.readLine()) != null && inputLine.startsWith("REGISTER:")) {
+            if ((inputLine = connection.in.readLine()) != null) {
                 String[] parts = inputLine.split(":");
-                String deviceId = parts[1];
-                String initialStatus = parts[2];
+                String deviceId = parts[0];
+                String initialStatus = parts[1];
                 
                 registry.registerDevice(deviceId, connection);
+                out.println("Data recived");
                 System.out.println("Registered device: " + deviceId + " with status " + initialStatus);
             }
             
