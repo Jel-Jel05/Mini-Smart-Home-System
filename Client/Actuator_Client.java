@@ -8,6 +8,16 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Actuator_Client {
+    private String id;
+    private String status;
+    private Socket socket;
+    private PrintWriter out;
+    private BufferedReader in;
+
+    public Actuator_Client(String id, String initialStatus) {
+        this.id = id;
+        this.status = initialStatus;
+    }
     public static void main(String[] args) {
         try {
             Scanner sc = new Scanner(System.in);
