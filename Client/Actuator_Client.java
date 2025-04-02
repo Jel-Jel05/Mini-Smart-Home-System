@@ -31,7 +31,7 @@ public class Actuator_Client {
             System.out.println("Enter Initial States(ON/OFF): ");
             String States = sc.nextLine(); // Get the Actuator initial state
 
-            bw.write(ID + ": " + States); // Print the new added Actuator
+            bw.write(ID + ":" + States); // Print the new added Actuator
             bw.newLine();
             bw.flush();
             System.out.println("Server Response: " + br.readLine()); // The server responds with a registration confirmation
@@ -57,6 +57,7 @@ public class Actuator_Client {
                     States = "OFF";
                 }
                 else if(newStates.equals( "EXIT")){
+                    System.out.println("Exiting the system successfully.....");
                     return;
                 }
                 System.out.println(ID + " is " + States);

@@ -52,6 +52,7 @@ public class ActuatorHandler extends Thread {
     
             } catch (Exception e) {
                 System.out.println("Connection with " + deviceId +" is off ");
+                registry.DeleteDevice(deviceId);
                 break;
             }
         }

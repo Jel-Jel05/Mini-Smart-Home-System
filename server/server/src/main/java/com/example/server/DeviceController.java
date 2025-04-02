@@ -12,11 +12,10 @@ public class DeviceController {
 
     @PostMapping("/control") //Accepts Http post requests to api/command and parses the json request to a control command obejct
     public String controlDevice(@RequestBody ControlCommand command) {
-        System.out.println("Received command for device: " + command.getDeviceId() + " to new states " + command.getCommand());
         if (!registry.containsDevice(command.getDeviceId())) {
             return "{\"message\": \"Device not found\"}";
         }
-        
+        System.out.println("Received command for device: " + command.getDeviceId() + " to new states " + command.getCommand());
         try {
             ActuatorConnection connection = registry.getConnection(command.getDeviceId());
             connection.sendCommand(command.getCommand());

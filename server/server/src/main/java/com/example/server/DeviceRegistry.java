@@ -30,4 +30,8 @@ public class DeviceRegistry {
     public boolean containsDevice(String id) {
         return devices.containsKey(id);
     }
+
+    public void DeleteDevice(String id){
+        devices.remove(id);
+    }
 }
