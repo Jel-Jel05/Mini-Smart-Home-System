@@ -19,8 +19,12 @@ public class DeviceRegistry {
         return instance;
     }
     
-    public void registerDevice(String id, ActuatorConnection connection) {
+    public boolean registerDevice(String id, ActuatorConnection connection) {
+        if(devices.containsKey(id)){
+            return false;
+        }
         devices.put(id, connection);
+        return true;
     }
     
     public ActuatorConnection getConnection(String id) {

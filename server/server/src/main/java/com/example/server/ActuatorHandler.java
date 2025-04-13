@@ -25,9 +25,14 @@ public class ActuatorHandler extends Thread {
                 deviceId = parts[0];
                 String initialStatus = parts[1];
                 
-                registry.registerDevice(deviceId, connection);
+                boolean check = registry.registerDevice(deviceId, connection);
                 out.println("Data recived");
-                System.out.println("Registered device: " + deviceId + " with status " + initialStatus);
+                if(check){
+                    System.out.println("Registered device: " + deviceId + " with status " + initialStatus);
+                }
+                else{
+                    System.out.println(deviceId + " is already registered\n");
+                }
             }
             
 
